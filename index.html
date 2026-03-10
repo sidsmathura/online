@@ -1,94 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Portal</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        .login-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-        }
-        .error-message {
-            color: red;
-            margin-bottom: 10px;
-        }
-    </style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>SIDS Panel</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+-webkit-user-select:none;
+user-select:none;
+}
+
+body{
+overflow-x:hidden;
+background:#0f2235;
+color:white;
+}
+
+/* LOGIN */
+
+.login-screen{
+height:50vh;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+}
+
+.login-box{
+background:#1e2f45;
+padding:30px;
+border-radius:20px;
+width:120%;
+max-width:400px;
+text-align:center;
+}
+
+.login-logo{
+width:200px;
+margin-bottom:15px;
+}
+
+.login-box input{
+width:100%;
+padding:15px;
+border-radius:12px;
+border:none;
+outline:none;
+margin-top:10px;
+}
+
+.login-box button{
+margin-top:15px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#4a86e8;
+color:white;
+}
+
+.invalid{
+margin-top:10px;
+font-size:13px;
+color:#ff6b6b;
+display:none;
+}
+
+/* DASHBOARD */
+
+.mobile-container{
+display:none;
+min-height:100vh;
+padding:20px 15px;
+position:relative;
+}
+
+.top-logo{
+position:absolute;
+top:12px;
+left:15px;
+width:100px;
+height:90px;
+border-radius:12px;
+}
+
+.wallet{
+position:absolute;
+top:20px;
+right:15px;
+background:#1e2f45;
+padding:6px 12px;
+border-radius:15px;
+font-size:13px;
+}
+
+.logout{
+position:absolute;
+top:22px;
+left:100px;
+background:#e53935;
+padding:6px 10px;
+border-radius:10px;
+font-size:12px;
+cursor:pointer;
+}
+
+.recharge{
+position:absolute;
+top:22px;
+left:160px;
+background:#2e7d32;
+padding:6px 10px;
+border-radius:10px;
+font-size:12px;
+cursor:pointer;
+}
+
+.support{
+position:absolute;
+top:22px;
+left:140px;
+background:#2196F3;
+padding:6px 10px;
+border-radius:10px;
+font-size:12px;
+cursor:pointer;
+display:flex;
+align-items:center;
+gap:5px;
+}
+
+.support i{
+animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.3)}
+100%{transform:scale(1)}
+}
+
+
+.recharge{
+position:absolute;
+top:22px;
+left:230px;
+background:#2e7d32;
+padding:6px 10px;
+border-radius:10px;
+font-size:12px;
+cursor:pointer;
+display:flex;
+align-items:center;
+gap:5px;
+}
+
+.recharge i{
+animation:rechargePulse 1s infinite;
+}
+
+@keyframes rechargePulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.4);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+
+
+.recharge-popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:5000;
+}
+
+.popup-box{
+position:relative;
+}
+
+.popup-box img{
+width:90%;
+max-width:400px;
+border-radius:12px;
+}
+
+.close-popup{
+position:absolute;
+top:-12px;
+right:-12px;
+background:red;
+color:white;
+width:30px;
+height:30px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+font-size:18px;
+}
+
+.marquee-box{
+margin-top:80px;
+background:#1e2f45;
+padding:8px;
+border-radius:10px;
+font-size:14px;
+overflow:hidden;
+}
+
+.welcome-card{
+background:linear-gradient(135deg,#833AB4,#FD1D1D,#FCB045);
+padding:20px;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.4);
+margin-top:20px;
+position:relative;
+}
+
+.profile-pic{
+width:45px;
+height:45px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid white;
+}
+
+.status{
+position:absolute;
+right:20px;
+top:20px;
+background:#FF0000;
+padding:5px 14px;
+border-radius:20px;
+font-size:13px;
+}
+
+.balance-box{
+background:rgba(255,255,255,0.15);
+padding:12px;
+margin-top:15px;
+border-radius:12px;
+font-size:14px;
+}
+
+.banner{
+margin:35px 0 25px;
+height:128px;
+border-radius:15px;
+overflow:hidden;
+}
+
+.banner img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* PIE CHART */
+
+.chart-section{
+display:flex;
+justify-content:space-around;
+align-items:center;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.chart-box{
+text-align:center;
+}
+
+.pie{
+width:150px;
+height:150px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:bold;
+color:white;
+}
+
+/* small loader */
+
+.small-loader{
+width:22px;
+height:22px;
+border:3px solid rgba(255,255,255,0.2);
+border-top:3px solid #4a86e8;
+border-radius:50%;
+margin:12px auto 0;
+animation:spin 1s linear infinite;
+}
+
+.loading{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#0f2235;
+display:none;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:999;
+}
+
+.spinner{
+width:55px;
+height:55px;
+border:6px solid rgba(255,255,255,0.2);
+border-top:6px solid #4a86e8;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin-top:20px;
+}
+
+@keyframes spin{
+100%{transform:rotate(360deg);}
+}
+
+/* notification */
+
+/* notification */
+
+.notify{
+position:fixed;
+bottom:20px;
+right:-400px;
+width:300px;
+background:#ffffff;
+padding:14px 18px;
+border-radius:10px;
+box-shadow:0 6px 20px rgba(0,0,0,0.5);
+transition:0.6s;
+z-index:2000;
+}
+
+.notify.show{
+right:20px;
+}
+
+.notify .time{
+color:#4a86e8;
+font-size:12px;
+}
+
+
+@keyframes blink{
+0%{opacity:1;}
+50%{opacity:0;}
+100%{opacity:1;}
+}
+
+
+</style>
 </head>
-<body>
-    <div class="login-container">
-    <center><h2>SIDS SCHOOL MATHURA<h2>
-        <h2>Login Protal</h2></center>
-        <form id="login-form">
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <input type="submit" value="Login">
-        </form>
-        <div class="error-message" id="error-message"></div>
-    </div>
 
-    <script>
-        // Hardcoded user IDs and passwords
-        const users = [
-            { username: "divya", password: "divya@123", redirectLink: "https://www.sanskriti.edu.in/" },
-            
-            { username: "yogesh", password: "yogesh@123", redirectLink: "https://mounthillacademy.in/" },
-            
-            { username: "priya", password: "priya@123", redirectLink: "https://kanhamakhan.com/" },
-            
-            { username: "student1", password: "password1", redirectLink: "student1.html" },
-            // Add more users here
-        ];
+<body oncontextmenu="return false">
+<!-- LOGIN -->
 
-        document.getElementById("login-form").addEventListener("submit", function(event) {
-            event.preventDefault();
+<div class="login-screen" id="login">
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj03cqIvpJG7KxJd7XwJ_ga-AkXbaHuxA7i0l3DjptpI0efjcp_DZRluKPeMvEDRUd_m9Lb1wtj40381bUsUs_JdWcfvi0szKQ-NQtIbav62cxo_NhvODciY7y-_MBxif7plMtXeOsCpmjQdKx3tcBYnunOoAD-AK2Cutb5p-0uda7WDcS_87I09Ub_De_f/s1800/Copy%20of%20SGMC%20NEW.png" class="login-logo">
 
-            const user = users.find(u => u.username === username && u.password === password);
+<div class="login-box">
 
-            if (user) {
-                const firstName = user.username.split(/[0-9]+/)[0]; // Extract first name
-                const welcomeMessage = `Welcome, ${firstName}!`;
+<h3>Enter Your Password</h3>
 
-                document.getElementById("error-message").textContent = welcomeMessage;
+<input type="password" id="code" placeholder="Enter Code">
 
-                // Redirect to the appropriate page
-                window.location.href = user.redirectLink;
-            } else {
-                document.getElementById("error-message").textContent = "Invalid username or password.";
-            }
-        });
-    </script>
+<button onclick="login()">LOGIN</button>
+
+<div class="invalid" id="invalid">Invalid Code</div>
+
+</div>
+</div>
+
+<!-- LOADING -->
+
+<div class="loading" id="loading">
+<h2>Please Wait...</h2>
+<div class="spinner"></div>
+</div>
+
+<!-- DASHBOARD -->
+
+<div class="mobile-container" id="dash">
+
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj03cqIvpJG7KxJd7XwJ_ga-AkXbaHuxA7i0l3DjptpI0efjcp_DZRluKPeMvEDRUd_m9Lb1wtj40381bUsUs_JdWcfvi0szKQ-NQtIbav62cxo_NhvODciY7y-_MBxif7plMtXeOsCpmjQdKx3tcBYnunOoAD-AK2Cutb5p-0uda7WDcS_87I09Ub_De_f/s1800/Copy%20of%20SGMC%20NEW.png" class="top-logo">
+
+
+<div class="recharge-popup" id="rechargePopup">
+
+<div class="popup-box">
+
+<div class="close-popup" onclick="closeRecharge()">×</div>
+
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjx9FYJTvSjd6GGIZSo6pGJUXiTNEJNfp-R_eEo8DlmsyN10RjKePo1BfNgSPNQVi25vyWo8humlQ3YqHFWcnOtWQHct8UTGsHpTAla4i0geeDzrWX-yUFG__pdFS4Cf6PFOi8DJYElWO-_00Fw4TuJUAV_BgKm5A5iV-21mi3hRc9F1ubJ0u5_x8K_63d/s1236/promotion,%20social%20media.jpeg">
+
+</div>
+
+</div>
+
+
+
+<div class="recharge" onclick="openRecharge()">
+<i class="fa fa-bolt"></i> Recharge
+</div>
+
+<div class="support" onclick="support()">
+<i class="fa fa-comment"></i> Support
+</div>
+
+<strong><div class="wallet" id="wallet">
+<i class="fa fa-credit-card"></i> ₹0
+</div></strong>
+
+<div class="marquee-box">
+<marquee scrollamount="3">
+पेमेंट करने के बाद कृपया 30 मिनट तक प्रतीक्षा करें। यदि पेमेंट दिखाई न दे, तो Support बटन पर क्लिक करके हमें सूचित करें।       
+■ Maintenance के लिए प्रतिदिन ₹45 की कटौती स्वचालित रूप से की जाएगी।
+</marquee>
+</div>
+
+<div class="welcome-card">
+
+<div style="display:flex;align-items:center;gap:10px;">
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhzp44vBTHVPVzUTIO9Kp_U46br5G_SVEXbEqqK03hPZ1bB2gZKaB_p5LoDS76Znb49ZWjw6X4ugfxYpEyAWCodog-cfZl3nFlSZBW2c35Gdu-7vSD-WxPwEDUgIE9JQ4rAQ9KucJV3TNmLR2vjTNbPdUFOkHyajhFuicJmJWT8Gz8CZWAmwoBXxzAvjbZq/s609/IMG_3833.jpeg" class="profile-pic">
+<h3>Welcome <br><strong>aashutosh_.shukla31</strong></h3>
+</div>
+
+<div class="status">Offline</div>
+
+<div class="balance-box">Total amount spent <strong> ₹ 0.00 </strong></div><br/>
+
+<p>Payment Date - <strong style="animation:blink 1s infinite;">Pending</strong></p>
+
+</div>
+<br/>
+
+
+<p><strong>ALL PLANS</strong></p><br/>
+
+<div style="display:flex;gap:10px;">
+
+<a href="https://sidsmathura.github.io/silver/" style="flex:1;text-decoration:none;">
+<div style="background:linear-gradient(45deg, #D7D7D8, #848B98);color:black;padding:20px;text-align:center;font-weight:bold;border-radius:10px;">
+SILVER
+</div>
+</a>
+
+<a href="https://sidsmathura.github.io/Gold/" style="flex:1;text-decoration:none;">
+<div style="background:linear-gradient(45deg, #BF953F, #FCF6BA, #AA771C);color:black;padding:20px;text-align:center;font-weight:bold;border-radius:10px;">
+GOLD
+</div>
+</a>
+
+<a href="https://sidsmathura.github.io/Platinum/" style="flex:1;text-decoration:none;">
+<div style="background:linear-gradient(45deg,  #E5E4E2 );color:black;padding:20px;text-align:center;font-weight:bold;border-radius:10px;">
+PLATINUM
+</div>
+</a>
+
+</div>
+
+<br/>
+
+<div class="banner">
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRfEqa4QqLkude2k3SvC6tnwD-1obhpzwVe14WIhhCZR0V7U3V_KahT8qtwYajoNeyDDyjuKT4mBMvnoV6nDXUVFa__jA-U_4UmKOTF5Re_a9WRUZbrueNEUGqSW4s62Cb-t_2iUPY_Omvi3y2_A2Wk11KjH8VIkTLd_HMBS8LA6hE1kl5mQWmYkC90X6s/s800/Promotion.jpeg">
+</div>
+
+<script>
+
+window.onload=function(){
+
+if(localStorage.getItem("login")){
+showDash()
+}
+
+updateWallet()
+loadCharts()
+
+}
+
+/* login */
+
+function login(){
+
+let code=document.getElementById("code").value
+
+if(code!=="aashutosh_.shukla31"){
+
+let msg=document.getElementById("invalid")
+msg.style.display="block"
+
+setTimeout(()=>msg.style.display="none",2000)
+
+return
+}
+
+document.getElementById("loading").style.display="flex"
+
+setTimeout(()=>{
+
+document.getElementById("loading").style.display="none"
+
+localStorage.setItem("login",true)
+
+showDash()
+
+},3000)
+
+}
+
+function showDash(){
+document.getElementById("login").style.display="none"
+document.getElementById("dash").style.display="block"
+}
+
+function updateWallet(){
+
+let walletAmount = 0.00
+
+let color = walletAmount > 0 ? "#00ff7f" : "#ff4d4d"
+
+document.getElementById("wallet").innerHTML =
+'<i class="fa fa-credit-card"></i> <span style="color:'+color+'">₹'+walletAmount+'</span>';
+
+}
+
+function logout(){
+localStorage.removeItem("login")
+location.reload()
+}
+
+function support(){
+window.location.href="https://wa.me/918755758050"
+}
+
+
+function openRecharge(){
+document.getElementById("rechargePopup").style.display="flex"
+}
+
+function closeRecharge(){
+document.getElementById("rechargePopup").style.display="none"
+}
+
+/* PIE CHART */
+
+let otherPercent = 0
+let mathuraPercent = 0
+
+function loadCharts(){
+
+document.getElementById("otherChart").style.background =
+`conic-gradient(#4a86e8 ${otherPercent}%, #1e2f45 0)`
+
+document.getElementById("otherChart").innerHTML = otherPercent + "%"
+
+document.getElementById("mathuraChart").style.background =
+`conic-gradient(#00c853 ${mathuraPercent}%, #1e2f45 0)`
+
+document.getElementById("mathuraChart").innerHTML = mathuraPercent + "%"
+
+}
+
+/* notification */
+
+function showNotification(){
+
+let n=document.getElementById("notify")
+
+n.classList.add("show")
+
+setTimeout(()=>{
+n.classList.remove("show")
+},4000)
+
+}
+
+setInterval(showNotification,10000)
+
+</script>
+
 </body>
 </html>
