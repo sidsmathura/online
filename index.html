@@ -126,6 +126,7 @@ font-size:12px;
 cursor:pointer;
 }
 
+
 .support{
 position:absolute;
 top:22px;
@@ -382,6 +383,230 @@ font-size:12px;
 100%{opacity:1;}
 }
 
+/* NOTIFICATION BELL BUTTON */
+
+.notify-btn{
+position:absolute;
+top:60px;   /* 👈 wallet के नीचे लाने के लिए */
+right:15px; /* 👈 right side align */
+background:#D1D100;
+padding:8px 10px;
+border-radius:10px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+/* Bell Animation */
+
+.notify-btn i{
+font-size:16px;
+animation:bellShake 1s infinite;
+}
+
+@keyframes bellShake{
+0%{transform:rotate(0);}
+25%{transform:rotate(15deg);}
+50%{transform:rotate(-15deg);}
+75%{transform:rotate(10deg);}
+100%{transform:rotate(0);}
+}
+
+/* Red Notification Count */
+
+.notify-count{
+position:absolute;
+top:-6px;
+right:-6px;
+background:red;
+color:white;
+font-size:10px;
+padding:2px 6px;
+border-radius:50%;
+font-weight:bold;
+}
+
+
+/* NOTIFICATION POPUP FULL SCREEN */
+
+.notify-popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:6000;
+}
+
+/* MAIN BOX */
+
+.notify-box{
+position:relative;
+background:white;
+width:90%;
+max-width:400px;
+border-radius:15px;
+padding:20px 15px 15px;
+max-height:80vh;
+overflow:hidden;
+}
+
+/* CLOSE BUTTON (TOP CENTER PERFECT) */
+
+.close-notify{
+position:absolute;
+top:10px;
+left:50%;
+transform:translateX(-50%);
+background:red;
+color:white;
+width:34px;
+height:34px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+font-size:18px;
+z-index:10;
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* SCROLL AREA */
+
+.notify-list{
+max-height:60vh;
+overflow-y:auto;
+margin-top:10px;
+padding-right:5px;
+}
+
+/* SINGLE NOTIFICATION ITEM */
+
+.notify-item{
+background:#f5f5f5;
+padding:12px;
+margin-bottom:10px;
+border-radius:10px;
+position:relative;
+cursor:pointer;
+transition:0.3s;
+}
+
+.notify-item:hover{
+background:#eaeaea;
+}
+
+/* TEXT */
+
+.notify-item p{
+color:black;
+font-size:13px;
+margin-bottom:3px;
+}
+
+/* AMOUNT GREEN */
+
+.amount{
+position:absolute;
+right:10px;
+top:15px;
+color:green;
+font-weight:bold;
+font-size:14px;
+}
+
+
+/* MESSAGE POPUP FULL SCREEN */
+
+.message-popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:7000;
+}
+
+/* MESSAGE BOX */
+
+.message-popup .popup-box{
+position:relative;
+background:white;
+padding:25px 15px 15px;
+border-radius:20px;
+width:90%;
+max-width:320px;
+max-height:70vh;
+overflow-y:auto;
+position:relative;   /* 👉 जरूरी */
+text-align:center;
+box-shadow:0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* CLOSE BUTTON (INSIDE TOP RIGHT PERFECT) */
+
+.message-popup .close-notify{
+position:absolute;
+top:10px;
+right:10px;
+left:auto;
+transform:none;
+background:#ff4d4d;
+color:white;
+width:32px;
+height:32px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+font-size:16px;
+z-index:10;
+box-shadow:0 3px 10px rgba(0,0,0,0.3);
+transition:0.3s;
+}
+
+/* HOVER EFFECT */
+
+.message-popup .close-notify:hover{
+background:#e60000;
+transform:scale(1.1);
+}
+
+/* MESSAGE TEXT */
+
+#popupText{
+color:black;
+font-size:14px;
+margin-top:10px;
+line-height:1.5;
+}
+
+/* SCROLLBAR (OPTIONAL PREMIUM LOOK) */
+
+.message-popup .popup-box::-webkit-scrollbar{
+width:5px;
+}
+
+.message-popup .popup-box::-webkit-scrollbar-thumb{
+background:#ccc;
+border-radius:10px;
+}
+
+
+
+
+
 
 </style>
 </head>
@@ -427,6 +652,50 @@ font-size:12px;
 
 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj03cqIvpJG7KxJd7XwJ_ga-AkXbaHuxA7i0l3DjptpI0efjcp_DZRluKPeMvEDRUd_m9Lb1wtj40381bUsUs_JdWcfvi0szKQ-NQtIbav62cxo_NhvODciY7y-_MBxif7plMtXeOsCpmjQdKx3tcBYnunOoAD-AK2Cutb5p-0uda7WDcS_87I09Ub_De_f/s1800/Copy%20of%20SGMC%20NEW.png" class="top-logo">
 
+<div class="notify-popup" id="notifyPopup">
+
+<div class="notify-box">
+
+<div class="close-popup" onclick="closeNotify()">×</div>
+
+<h3 style="color:black;">Notifications</h3>
+
+<div class="notify-list">
+
+<div class="notify-item" onclick="openMessage('Payment Received ₹654')">
+<p><b>17 March 2026</b></p>
+<p>Your payment has been received successfully.</p>
+<span class="amount">₹4500</span>
+</div>
+
+<div class="notify-item" onclick="openMessage('Bonus Added ₹654')">
+<p><b>17 March 2026</b></p>
+<p> Maintenance Charge Deducted.</p>
+<span class="amount">₹45</span>
+</div>
+
+
+<div class="notify-item" onclick="openMessage('Bonus Added ₹654')">
+<p><b>Today</b></p>
+<p> Maintenance Charge Deducted.</p>
+<span class="amount">₹235</span>
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+</div>
+
+
 
 <div class="recharge-popup" id="rechargePopup">
 
@@ -445,6 +714,17 @@ font-size:12px;
 <div class="recharge" onclick="openRecharge()">
 <i class="fa fa-bolt"></i> Recharge
 </div>
+
+
+<div class="notify-btn" onclick="openNotify()">
+    <i class="fa fa-bell"></i>
+    <span class="notify-count" id="notifyCount">1</span>
+</div>
+
+
+
+
+
 
 <div class="support" onclick="support()">
 <i class="fa fa-comment"></i> Support
@@ -623,6 +903,25 @@ document.getElementById("mathuraChart").style.background =
 document.getElementById("mathuraChart").innerHTML = mathuraPercent + "%"
 
 }
+
+function openNotify(){
+document.getElementById("notifyPopup").style.display="flex"
+document.getElementById("notifyCount").innerText="0"
+}
+
+function closeNotify(){
+document.getElementById("notifyPopup").style.display="none"
+}
+
+function openMessage(msg){
+document.getElementById("popupText").innerText = msg
+document.getElementById("messagePopup").style.display="flex"
+}
+
+function closeMessage(){
+document.getElementById("messagePopup").style.display="none"
+}
+
 
 /* notification */
 
